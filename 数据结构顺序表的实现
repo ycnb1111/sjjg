@@ -1,0 +1,72 @@
+/*完整代码*/
+#include<stdio.h>
+#include<stdlib.h>
+#define maxsize 10000
+typedef struct
+{
+    int data[maxsize];
+    int length;
+} sqlist;
+
+/*创建顺序表*/
+void CreatList(sqlist *La,sqlist *Lb)
+{
+    int i;
+    scanf("%d %d",&La->length,&Lb->length);
+    for(i=0; i<La->length; i++)
+        scanf("%d",&La->data[i]);
+    for(i=0; i<Lb->length; i++)
+        scanf("%d",&Lb->data[i]);
+}
+
+void merge(sqlist *Lb,sqlist *La,sqlist *Lc)
+{
+    int i,j,k;
+    i=j=k=0;
+    while(i<La->length && j<Lb->length)
+    {
+        if(La->data[i] < Lb->data[j])
+        {
+            Lc->data[k++]=La->data[i];
+            i++;
+        }
+        else if(La->data[i] > Lb->data[j])
+        {
+            Lc->data[k++]=Lb->data[j];
+            j++;
+        }
+        else
+        {
+            Lc->data[k++]=La->data[i];
+            i++;
+            j++;
+        }
+    }
+    while(i<La->length)
+    {
+        Lc->data[k++]=La->data[i];
+        i++;
+    }
+    while(j<Lb->length)
+    {
+        Lc->data[k++]=Lb->data[j];
+        j++;
+    }
+    Lc->length=k;
+}
+
+int print(sqlist *L)
+{
+    int i;
+    for(i=0; i<L->length-1; i++)
+        printf("%d ",L->data[i]);
+    printf("%d\n",L->data[L->length-1]);
+}
+int main()
+{
+    sqlist La,Lb,Lc;
+    CreatList(&La,&Lb);
+    merge(&Lb,&La,&Lc);
+    print(&Lc);
+    return 0;
+}
